@@ -1,11 +1,11 @@
 import 'dart:convert';
-
+import 'package:pokedex_app/pokemon_detail.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;import 'package:pokedex_app/pokemon_detail.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -32,101 +32,106 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
         body: Stack(children: [
-          Positioned(
-              top: -50,
-              right: -50,
-              child: Image.asset(
-                'images/pokeball.jpg',
-                width: 200,
-                fit: BoxFit.fitWidth,
-              )),
-          Positioned(
-              top: 100,
-              left: 20,
-              child: Text("pokedex",
-                style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),)
-          ),
-          Positioned(
-            top: 150,
-            bottom: 0,
-            width: width,
-            child: Column(
-              children: [
-                pokedex != null
-                    ? Expanded(
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 1.4,
-                    ),
-                    itemCount: pokedex.length,
-                    itemBuilder: (context, index) {
-                      var type = pokedex[index]['type'];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 12),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(20)),
-                          ),
-                          child: Card(
-                            color: Colors.green,
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                    bottom: -10,
-                                    right: -10,
-                                    child: Image.asset(
-                                      'images/pokeball.jpg',
-                                      height: 100,
-                                      fit: BoxFit.fitHeight,
-                                    )),
-                                Column(
+      Positioned(
+          top: -50,
+          right: -50,
+          child: Image.asset(
+            'images/pokeball.jpg',
+            width: 200,
+            fit: BoxFit.fitWidth,
+          )),
+      Positioned(
+          top: 100,
+          left: 20,
+          child: Text("Pokedex",
+          style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold, color: Colors.black),)
+      ),
+      Positioned(
+        top: 150,
+        bottom: 0,
+        width: width,
+        child: Column(
+          children: [
+            if (pokedex != null) Expanded(
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 1.4,
+                      ),
+                      itemCount: pokedex.length,
+                      itemBuilder: (context, index) {
+                        var type = pokedex[index]['type'];
+                        return InkWell(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 12),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                              ),
+                              child: Card(
+                                color: Colors.green,
+                                child: Stack(
                                   children: [
                                     Positioned(
-                                      top: 30,
-                                      left: 20,
-                                      child: Text(pokedex[index]['name']),
-                                    ),
-                                    Positioned(
-                                      top: 45,
-                                      left: 20,
-                                      child: Container(
-                                        color: Colors.black26,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 8.0,
-                                              right: 8.0,
-                                              top: 4,
-                                              bottom: 4),
-                                          child: Text(type.toString()),
+                                        bottom: -10,
+                                        right: -10,
+                                        child: Image.asset(
+                                          'images/pokeball.jpg',
+                                          height: 100,
+                                          fit: BoxFit.fitHeight,
+                                        )),
+                                    Column(
+                                      children: [
+                                        Positioned(
+                                          top: 30,
+                                          left: 20,
+                                          child: Text(pokedex[index]['name']),
                                         ),
-                                      ),
+                                        Positioned(
+                                          top: 45,
+                                          left: 20,
+                                          child: Container(
+                                            color: Colors.black26,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8.0,
+                                                  right: 8.0,
+                                                  top: 4,
+                                                  bottom: 4),
+                                              child: Text(type.toString()),
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                            bottom: 5,
+                                            right: 5,
+                                            child: CachedNetworkImage(
+                                                imageUrl: pokedex[index]['img'])),
+                                      ],
                                     ),
-                                    Positioned(
-                                        bottom: 5,
-                                        right: 5,
-                                        child: CachedNetworkImage(
-                                            imageUrl: pokedex[index]['img'])),
                                   ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                )
-                    : Center(
-                  child: CircularProgressIndicator(),
-                )
-              ],
-            ),
-          ),
-        ]));
+                          onTap: (){
+                            // TODO Navigate to new detail screen
+                            Navigator.push(context, MaterialPageRoute(builder: (_) => PokemonDetailScreen(
+
+                            )));
+                          },
+                        );
+                      },
+                    ),
+                  ) else Center(
+                    child: CircularProgressIndicator(),
+                  )
+          ],
+        ),
+      ),
+    ]));
   }
 
   void fetchPokemonData() {
@@ -142,4 +147,3 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 }
-
