@@ -1,11 +1,8 @@
 import 'dart:convert';
-import 'package:pokedex_app/pokemon_detail.dart';
+import 'package:pokedexapp/pokemon_detail.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:http/http.dart' as http;import 'package:pokedex_app/pokemon_detail.dart';
+import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var pokeApi =
       "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json";
-  var pokedex;
+  late List pokedex;
   @override
   void initState() {
     // TODO: implement initState
@@ -52,82 +49,93 @@ class _HomeScreenState extends State<HomeScreen> {
         width: width,
         child: Column(
           children: [
-            if (pokedex != null) Expanded(
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 1.4,
-                      ),
-                      itemCount: pokedex.length,
-                      itemBuilder: (context, index) {
-                        var type = pokedex[index]['type'];
-                        return InkWell(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8.0, horizontal: 12),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
-                              ),
-                              child: Card(
-                                color: Colors.green,
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                        bottom: -10,
-                                        right: -10,
-                                        child: Image.asset(
-                                          'images/pokeball.jpg',
-                                          height: 100,
-                                          fit: BoxFit.fitHeight,
-                                        )),
-                                    Column(
-                                      children: [
-                                        Positioned(
-                                          top: 30,
-                                          left: 20,
-                                          child: Text(pokedex[index]['name']),
-                                        ),
-                                        Positioned(
-                                          top: 45,
-                                          left: 20,
-                                          child: Container(
-                                            color: Colors.black26,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 8.0,
-                                                  right: 8.0,
-                                                  top: 4,
-                                                  bottom: 4),
-                                              child: Text(type.toString()),
-                                            ),
+            pokedex != null ?Expanded(
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 1.4,
+                    ),
+                    itemCount: pokedex.length,
+                    itemBuilder: (context, index) {
+                      var type = pokedex[index]['type'][0];
+                      return InkWell(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 12),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: type == 'Grass' ? Colors.greenAccent : type=='Fire' ? Colors.redAccent : type=='Water' ? Colors.blue
+                                  : type=='Electric' ? Colors.yellow : type=='Rock' ? Colors.grey : type=='Ground' ? Colors.brown :
+                                    type=='Psychic' ? Colors.indigo : type=='Fighting' ? Colors.orange : type=='Bug' ? Colors.lightGreenAccent :
+                                    type=='Ghost' ? Colors.deepPurple : type=='Poison' ? Colors.deepPurpleAccent : type=='Normal' ? Colors.black26 : Colors.pink,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                            ),
+                            child: Card(
+                              color: type == 'Grass' ? Colors.greenAccent : type=='Fire' ? Colors.redAccent : type=='Water' ? Colors.blue
+                                  : type=='Electric' ? Colors.yellow : type=='Rock' ? Colors.grey : type=='Ground' ? Colors.brown :
+                              type=='Psychic' ? Colors.indigo : type=='Fighting' ? Colors.orange : type=='Bug' ? Colors.lightGreenAccent :
+                              type=='Ghost' ? Colors.deepPurple : type=='Poison' ? Colors.deepPurpleAccent : type=='Normal' ? Colors.black26 : Colors.pink,
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                      bottom: -10,
+                                      right: -10,
+                                      child: Image.asset(
+                                        'images/pokeball.jpg',
+                                        height: 80,
+                                        fit: BoxFit.fitHeight,
+                                      )),
+                                  Column(
+                                    children: [
+                                      Positioned(
+                                        top: 30,
+                                        left: 20,
+                                        child: Text(pokedex[index]['name']),
+                                      ),
+                                      Positioned(
+                                        top: 45,
+                                        left: 20,
+                                        child: Container(
+                                          color: Colors.black26,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0,
+                                                right: 8.0,
+                                                top: 4,
+                                                bottom: 4),
+                                            child: Text(type.toString()),
                                           ),
                                         ),
-                                        Positioned(
-                                            bottom: 5,
-                                            right: 5,
-                                            child: CachedNetworkImage(
-                                                imageUrl: pokedex[index]['img'])),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                      ),
+
+                                           CachedNetworkImage(
+                                              imageUrl: pokedex[index]['img']),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                          onTap: (){
-                            // TODO Navigate to new detail screen
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => PokemonDetailScreen(
+                        ),
+                        onTap: (){
+                          // TODO Navigate to new detail screen
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => PokemonDetailScreen(
+                            pokemonDetail: pokedex[index],
+                            color: type == 'Grass' ? Colors.greenAccent : type=='Fire' ? Colors.redAccent : type=='Water' ? Colors.blue
+                                : type=='Electric' ? Colors.yellow : type=='Rock' ? Colors.grey : type=='Ground' ? Colors.brown :
+                            type=='Psychic' ? Colors.indigo : type=='Fighting' ? Colors.orange : type=='Bug' ? Colors.lightGreenAccent :
+                            type=='Ghost' ? Colors.deepPurple : type=='Poison' ? Colors.deepPurpleAccent : type=='Normal' ? Colors.black26 : Colors.pink,
+                            heroTag: index,
+                          ),));
+                        },
+                      );
+                    },
+                  ),
+                ): Center(
+              child: CircularProgressIndicator(),
+            )
 
-                            )));
-                          },
-                        );
-                      },
-                    ),
-                  ) else Center(
-                    child: CircularProgressIndicator(),
-                  )
           ],
         ),
       ),
@@ -142,7 +150,9 @@ class _HomeScreenState extends State<HomeScreen> {
         var decodedJsonData = jsonDecode(value.body);
         pokedex = decodedJsonData['pokemon'];
         print(pokedex[0]['name']);
-        setState(() {});
+        setState(() {
+
+        });
       }
     });
   }

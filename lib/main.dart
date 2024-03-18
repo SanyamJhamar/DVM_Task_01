@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pokedex_app/home_screen.dart';
+import 'package:pokedexapp/home_screen.dart';
 
 void main(){
   runApp(Pokedex());

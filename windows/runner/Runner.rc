@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "pokedex_app" "\0"
+            VALUE "FileDescription", "pokedexapp" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "pokedex_app" "\0"
+            VALUE "InternalName", "pokedexapp" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "pokedex_app.exe" "\0"
-            VALUE "ProductName", "pokedex_app" "\0"
+            VALUE "OriginalFilename", "pokedexapp.exe" "\0"
+            VALUE "ProductName", "pokedexapp" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

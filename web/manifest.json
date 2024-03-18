@@ -1,6 +1,6 @@
 {
-    "name": "pokedex_app",
-    "short_name": "pokedex_app",
+    "name": "pokedexapp",
+    "short_name": "pokedexapp",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
