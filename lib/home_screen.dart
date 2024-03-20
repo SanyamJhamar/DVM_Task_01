@@ -25,7 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
         body: Stack(children: [
@@ -78,14 +77,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               type=='Ghost' ? Colors.deepPurple : type=='Poison' ? Colors.deepPurpleAccent : type=='Normal' ? Colors.black26 : Colors.pink,
                               child: Stack(
                                 children: [
+
                                   Positioned(
-                                      bottom: -10,
-                                      right: -10,
-                                      child: Image.asset(
-                                        'images/pokeball.jpg',
-                                        height: 80,
-                                        fit: BoxFit.fitHeight,
-                                      )),
+                                    height: 90,
+                                    width: 120,
+                                    left: 50,
+
+                                    child: CachedNetworkImage(
+                                        imageUrl: pokedex[index]['img']),
+
+                                  ),
                                   Column(
                                     children: [
                                       Positioned(
@@ -109,8 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ),
 
-                                           CachedNetworkImage(
-                                              imageUrl: pokedex[index]['img']),
+
                                     ],
                                   ),
                                 ],

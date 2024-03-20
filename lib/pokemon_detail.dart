@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class PokemonDetailScreen extends StatefulWidget {
   final pokemonDetail;
@@ -238,8 +236,9 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
             ),
           ),
           Positioned(
-            top: 140,
+            top: 150,
               left: width/2,
+              height: 170,
               child: CachedNetworkImage(
             imageUrl: widget.pokemonDetail['img'],
                 height: 200,
